@@ -20,40 +20,43 @@ Android Key Store Git repo
 
 ```ruby
 lane :test do
-  #Create a Dummy File
-  File.write("../my_demo_file.txt", "Some Content")
+  # Generate a new Android Keystore
   
-  #import/update this in cryptex
+  cryptex_generate_keystore(
+    destination: "sample.keystore",
+    fullname: "Helmut Januschka",
+    city: "Vienna",
+    alias: "releaseKey"
+  )
+
+  # import/update this in cryptex
   cryptex(
     type: "import",
-    in: "my_demo_file.txt",
+    in: "sample.keystore",
     key: "some_key_my_file_can_be_found"
   )
-  
-  #export a file from cryptex
+
+  # export a file from cryptex
   cryptex(
     type: "export",
     out: "here_goes_my_file.txt",
     key: "some_key_my_file_can_be_found"
   )
-  
+
   file_output = File.read("../here_goes_my_file.txt")
-  puts "File Content: #{file_output.tr("\n", " ")}"
-  
-  
-  #delete the file
+  puts "File Content: #{file_output.tr("\n", ' ')}"
+
+  # delete the file
   cryptex(
     type: "delete",
     key: "some_key_my_file_can_be_found"
   )
-  
-  #Nuke's all files
+
+  # Nuke's all files
   cryptex(
     type: "nuke"
   )
-  
 end
-
 ```
 
 ## Run tests for this plugin

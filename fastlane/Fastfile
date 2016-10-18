@@ -1,11 +1,17 @@
 lane :test do
-  # Create a Dummy File
-  File.write("../my_demo_file.txt", "Some Content")
+  # Generate a new Android Keystore
+  
+  cryptex_generate_keystore(
+    destination: "sample.keystore",
+    fullname: "Helmut Januschka",
+    city: "Vienna",
+    alias: "releaseKey"
+  )
 
   # import/update this in cryptex
   cryptex(
     type: "import",
-    in: "my_demo_file.txt",
+    in: "sample.keystore",
     key: "some_key_my_file_can_be_found"
   )
 
