@@ -19,6 +19,7 @@ Android Key Store Git repo
 ## Example
 
 ```ruby
+
 lane :test do
   # Generate a new Android Keystore
   
@@ -33,23 +34,23 @@ lane :test do
   cryptex(
     type: "import",
     in: "sample.keystore",
-    key: "some_key_my_file_can_be_found"
+    key: "my_awesome_app_production"
   )
 
   # export a file from cryptex
   cryptex(
     type: "export",
-    out: "here_goes_my_file.txt",
-    key: "some_key_my_file_can_be_found"
+    out: "releaseKey.keystore",
+    key: "my_awesome_app_production"
   )
 
-  file_output = File.read("../here_goes_my_file.txt")
+  file_output = File.read("../releaseKey.keystore")
   puts "File Content: #{file_output.tr("\n", ' ')}"
 
   # delete the file
   cryptex(
     type: "delete",
-    key: "some_key_my_file_can_be_found"
+    key: "my_awesome_app_production"
   )
 
   # Nuke's all files
@@ -57,6 +58,8 @@ lane :test do
     type: "nuke"
   )
 end
+
+
 ```
 
 ## Run tests for this plugin
