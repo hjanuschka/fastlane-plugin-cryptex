@@ -1,15 +1,7 @@
 #!/usr/bin/env ruby
 $:.push File.expand_path("../../lib", __FILE__)
-module Fastlane
-  module Cryptex
-    ROOT = Pathname.new(File.expand_path('../../lib/fastlane/plugin/cryptex', __FILE__))
-  end
-end
+
 require 'fastlane'
-require 'fastlane/plugin/cryptex/options'
-require 'fastlane/plugin/cryptex/version'
-require 'fastlane/plugin/cryptex/setup'
-require 'fastlane/plugin/cryptex/runner'
-require 'fastlane/plugin/cryptex/commands_generator'
+require 'fastlane/plugin/cryptex'
 
 Fastlane::Cryptex::CommandsGenerator.start

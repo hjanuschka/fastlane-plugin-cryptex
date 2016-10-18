@@ -3,6 +3,10 @@ module Fastlane
     class CryptexAction < Action
       def self.run(params)
         UI.message("The cryptex plugin is working!")
+
+        params.load_configuration_file("Cryptexfile")
+
+        Cryptex::Runner.new.run(params)
       end
 
       def self.description
@@ -14,13 +18,7 @@ module Fastlane
       end
 
       def self.available_options
-        [
-          # FastlaneCore::ConfigItem.new(key: :your_option,
-          #                         env_name: "CRYPTEX_YOUR_OPTION",
-          #                      description: "A description of your option",
-          #                         optional: false,
-          #                             type: String)
-        ]
+        Cryptex::Options.available_options
       end
 
       def self.is_supported?(platform)

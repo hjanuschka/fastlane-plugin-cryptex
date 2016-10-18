@@ -18,9 +18,43 @@ Android Key Store Git repo
 
 ## Example
 
-Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`. 
+```ruby
+lane :test do
+  #Create a Dummy File
+  File.write("../my_demo_file.txt", "Some Content")
+  
+  #import/update this in cryptex
+  cryptex(
+    type: "import",
+    in: "my_demo_file.txt",
+    key: "some_key_my_file_can_be_found"
+  )
+  
+  #export a file from cryptex
+  cryptex(
+    type: "export",
+    out: "here_goes_my_file.txt",
+    key: "some_key_my_file_can_be_found"
+  )
+  
+  file_output = File.read("../here_goes_my_file.txt")
+  puts "File Content: #{file_output.tr("\n", " ")}"
+  
+  
+  #delete the file
+  cryptex(
+    type: "delete",
+    key: "some_key_my_file_can_be_found"
+  )
+  
+  #Nuke's all files
+  cryptex(
+    type: "nuke"
+  )
+  
+end
 
-**Note to author:** Please set up a sample project to make it easy for users to explore what your plugin does. Provide everything that is necessary to try out the plugin in this project (including a sample Xcode/Android project if necessary)
+```
 
 ## Run tests for this plugin
 
