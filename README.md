@@ -62,6 +62,29 @@ end
 
 ```
 
+## Commandline Examples:
+
+```bash
+#init
+cryptex init
+
+# import file
+cryptex -s import -i file_to_hide.txt -k file_key
+
+# export file
+cryptex -s export -k file_key -o file_to_hide.txt
+
+#delete file
+cryptex -s delete -k file_key
+
+#nuke repo
+cryptex nuke
+
+
+```
+
+
+
 ## Run tests for this plugin
 
 To run both the tests, and code style validation, run
