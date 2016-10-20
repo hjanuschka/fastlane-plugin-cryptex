@@ -1,30 +1,28 @@
 
 lane :env_test_filtered do
-  
-#import some env into the space of `my_group`
-cryptex(
-  type: "import_env",
-  hash: {
-    "helmut" => "go",
-    "some_url" =>  "http://lets.do.it",
-    "ignore_me" => "asdf"
-  },
-  key: "my_group"
-)
-env_out = cryptex(
-  type: "export_env",
-  key: "my_group",
-  hash: {"some_url" => true, "helmut"=>true}, #only fetch specific variables :)
-  set_env: true #THIS one sets the values found directly into to ENV
-)
+  # import some env into the space of `my_group`
+  cryptex(
+    type: "import_env",
+    hash: {
+      "helmut" => "go",
+      "some_url" =>  "http://lets.do.it",
+      "ignore_me" => "asdf"
+    },
+    key: "my_group"
+  )
+  env_out = cryptex(
+    type: "export_env",
+    key: "my_group",
+    hash: { "some_url" => true, "helmut" => true }, # only fetch specific variables :)
+    set_env: true # THIS one sets the values found directly into to ENV
+  )
 
-puts "IN ENV it is:"
-puts ENV['some_url']
-puts "returned: #{env_out.inspect}"
-
+  puts "IN ENV it is:"
+  puts ENV['some_url']
+  puts "returned: #{env_out.inspect}"
 end
 lane :env_test do
-  #import some env into the space of `my_group`
+  # import some env into the space of `my_group`
   cryptex(
     type: "import_env",
     hash: {
@@ -36,20 +34,16 @@ lane :env_test do
   env_out = cryptex(
     type: "export_env",
     key: "my_group",
-    set_env: true #THIS one sets the values found directly into to ENV
+    set_env: true # THIS one sets the values found directly into to ENV
   )
-  
+
   puts "IN ENV it is:"
   puts ENV['some_url']
   puts "returned: #{env_out.inspect}"
-  
-  
-  
-  
 end
 lane :test do
   # Generate a new Android Keystore
-  
+
   cryptex_generate_keystore(
     destination: "sample.keystore",
     fullname: "Helmut Januschka",

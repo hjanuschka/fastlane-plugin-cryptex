@@ -2,30 +2,29 @@ module Fastlane
   module Cryptex
     class Runner
       attr_accessor :git_changed
-      
+
       def import_env(params)
         env_world_file = "#{params[:workspace]}/#{params[:key]}_env_world.crypt"
         File.write(env_world_file, params[:hash].to_json)
         @git_changed = true
       end
+
       def export_env(params)
         env_world_file = "#{params[:workspace]}/#{params[:key]}_env_world.crypt"
         world_data = File.read(env_world_file)
         world_data_parsed = JSON.parse(world_data)
-          ret_json = {}
-          
-          world_data_parsed.keys.each do | el |
-            
-              if !params[:hash] || (params[:hash] && params[:hash].keys.include?(el))
-                ret_json[el] = world_data_parsed[el] 
-                if params[:set_env]
-                  ENV[el] = world_data_parsed[el]
-                end
-              end
-            
-        end        
+        ret_json = {}
+
+        world_data_parsed.keys.each do |el|
+          next unless !params[:hash] || (params[:hash] && params[:hash].keys.include?(el))
+          ret_json[el] = world_data_parsed[el]
+          if params[:set_env]
+            ENV[el] = world_data_parsed[el]
+          end
+        end
         return world_data_parsed
       end
+
       def import_file(params)
         File.write("#{params[:workspace]}/#{params[:key]}.crypt", File.read(File.expand_path(params[:in])))
         @git_changed = true

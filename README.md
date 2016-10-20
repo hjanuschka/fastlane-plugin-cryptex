@@ -57,6 +57,29 @@ lane :test do
   cryptex(
     type: "nuke"
   )
+  
+  
+  #ENV SAMPLES
+  #import some env into the space of `my_group`
+  cryptex(
+    type: "import_env",
+    hash: {
+      "helmut" => "go",
+      "some_url" =>  "http://lets.do.it"
+    },
+    key: "my_group"
+  )
+  env_out = cryptex(
+    type: "export_env",
+    key: "my_group",
+    set_env: true #THIS one sets the values found directly into to ENV
+    #hash: {"my_key"=>true, "some_url"=>true} # only returned specific keys
+  )
+  
+  puts "IN ENV it is:"
+  puts ENV['some_url']
+  puts "returned: #{env_out.inspect}"
+  
 end
 
 
