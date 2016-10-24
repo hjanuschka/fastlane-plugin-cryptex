@@ -10,7 +10,7 @@ module Fastlane
       end
 
       def self.description
-        "Android Key Store Git repo"
+        "Secure Git-Backed Storage"
       end
 
       def self.authors
@@ -22,10 +22,6 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
-        # See: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-        #
-        # [:ios, :mac, :android].include?(platform)
         true
       end
     end

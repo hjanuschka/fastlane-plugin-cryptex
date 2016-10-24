@@ -11,7 +11,6 @@ module Fastlane
 
         UI.message "Cloning remote git repo..."
         begin
-          # GIT_TERMINAL_PROMPT will fail the `git clone` command if user credentials are missing
           FastlaneCore::CommandExecutor.execute(command: "GIT_TERMINAL_PROMPT=0 #{command}",
                                               print_all: $verbose,
                                           print_command: $verbose)
