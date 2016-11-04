@@ -6,6 +6,7 @@ require 'fastlane/plugin/cryptex/version'
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-cryptex'
   spec.version       = Fastlane::Cryptex::VERSION
+  spec.version = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   spec.author        = %q{Helmut Januschka}
   spec.email         = %q{h.januschka@krone.at}
 

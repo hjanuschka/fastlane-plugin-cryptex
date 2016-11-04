@@ -1,4 +1,11 @@
-# os: osx # enable this if you need macOS support
 language: ruby
 rvm:
-  - 2.2.4
+- 2.2.4
+deploy:
+  provider: rubygems
+  api_key:
+    secure: oAN9FKlxV/FrpbCGUkEzacKXEuxvg//mJZpRa6Iq86eddUlFC96ErXCqwyeA8IUHNwa2TGNxn3GfsRMC+j8YxlTL9vHqFk42t2HyuVjLjDYzfETFEDcfbdmny6C6U/DQg8Krb1B+tBittlbj8/v1JMkR4NBLdr92OGnSEH1zRq0Zh62eTSLl0o4oKX2RxVO3kUNtxm7b5eMCwW0wJXOYQr481e1a5NB4VHZfn1vnZad7dpvHHhnd8VYzkRR04yJ/8PIDMBmikYSq/+rG+J8F9N6DjinDJHHE9pd9S0dqKW3EMb4pK2WI3ohGTLtm9WnmkPYrvr656Yu3z0dcBA6zrjygowAgEFJkq99VPdO/7ky9J8VFQeatdVrK6/tqqm9DOzUdRatIz+g2ZqrggJ4z2PD/49fTUB2BC/6+RIZzr0pUdB/GNMatzOlgTeXNNt7mee0CcNdiXuFSKv0p6vbzq4S1NKbErQF3QN441CY7ZieFPVraewWZhK9WuExdjD8BLJLLfQiZV3NFjbfLGfvPGNeLdwvLe6jf6WyH1QYV/octdznx+RFXrI6XXWSjuyWqJWEUqWeCImhu3Oychd74PB9UW8iOEYV5ehG2nbyI/zJ2DFNfyIFxsBbh7RgtAAnU6+n/mLC5M32YgSwxSx9ndGooylYH+Md9UTT4ib6kxKc=
+  gem: fastlane-plugin-sharethemeal
+  on:
+    branch: master
+    repo: hjanuschka/fastlane-plugin-sharethemeal
