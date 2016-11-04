@@ -1,20 +1,26 @@
-# cryptex plugin
+# Cryptex for fastlane
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-cryptex)
 
-## Getting Started
+<img src='https://upload.wikimedia.org/wikipedia/commons/4/42/Cryptex.jpg'>
+
+## About cryptex
+
+Manage files - crypted - in a git repository.
+adds fastlane actions, and also ships a `cryptex` binary.
+
+
+ * all kinds of files
+ * `ENV` variables
+
+
+## Setup
 
 This project is a [fastlane](https://github.com/fastlane/fastlane) plugin. To get started with `fastlane-plugin-cryptex`, add it to your project by running:
 
 ```bash
 fastlane add_plugin cryptex
 ```
-
-## About cryptex
-
-Android Key Store Git repo
-
-**Note to author:** Add a more detailed description about this plugin here. If your plugin contains multiple actions, make sure to mention them here.
 
 ## Example
 
@@ -107,32 +113,12 @@ cryptex nuke
 ```
 
 
-
-## Run tests for this plugin
-
-To run both the tests, and code style validation, run
-
-```
-rake
-```
-
-To automatically fix many of the styling issues, use 
-```
-rubocop -a
-```
-
 ## Issues and Feedback
 
 For any other issues and feedback about this plugin, please submit it to this repository.
 
-## Troubleshooting
-
-If you have trouble using plugins, check out the [Plugins Troubleshooting](https://github.com/fastlane/fastlane/blob/master/fastlane/docs/PluginsTroubleshooting.md) doc in the main `fastlane` repo.
 
 ## Using `fastlane` Plugins
 
 For more information about how the `fastlane` plugin system works, check out the [Plugins documentation](https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Plugins.md).
 
-## About `fastlane`
-
-`fastlane` is the easiest way to automate building and releasing your iOS and Android apps. To learn more, check out [fastlane.tools](https://fastlane.tools).
