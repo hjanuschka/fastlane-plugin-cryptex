@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
 
-  # spec.add_dependency 'your-dependency', '~> 1.0.0'
+  spec.add_dependency 'commander', '>= 4.3.5'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'bundler'
