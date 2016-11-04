@@ -8,4 +8,4 @@ deploy:
   gem: fastlane-plugin-sharethemeal
   on:
     branch: master
-    repo: hjanuschka/fastlane-plugin-sharethemeal
+    repo: hjanuschka/fastlane-plugin-cryptex
