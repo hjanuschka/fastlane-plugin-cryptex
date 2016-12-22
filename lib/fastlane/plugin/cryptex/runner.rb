@@ -4,13 +4,32 @@ module Fastlane
       attr_accessor :git_changed
 
       def import_env(params)
+        UI.user_error!("No input hash supplied") if params[:hash].to_s.length.zero?
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
+
         env_world_file = "#{params[:workspace]}/#{params[:key]}_env_world.crypt"
-        File.write(env_world_file, params[:hash].to_json)
+        if params[:hash].kind_of?(String)
+          begin
+            params[:hash] = JSON.parse(params[:hash])
+          rescue
+            # might contain sensitive informatio
+            UI.user_error!("Supplied :hash isn't in json format")
+          end
+        end
+        if params[:hash].kind_of?(Hash)
+          json = params[:hash].to_json
+        else
+          UI.user_error!("Not really sure what to do with :hash param of type #{params[:hash].class}")
+        end
+        File.write(env_world_file, json)
         @git_changed = true
       end
 
       def export_env(params)
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
         env_world_file = "#{params[:workspace]}/#{params[:key]}_env_world.crypt"
+        UI.user_error!("Wrong key file supplied.") unless File.exist? env_world_file
+
         world_data = File.read(env_world_file)
         world_data_parsed = JSON.parse(world_data)
         ret_json = {}
@@ -26,18 +45,33 @@ module Fastlane
       end
 
       def import_file(params)
-        File.write("#{params[:workspace]}/#{params[:key]}.crypt", File.read(File.expand_path(params[:in])))
+        UI.user_error!("No input file supplied") if params[:in].to_s.length.zero?
+        in_path = File.expand_path(params[:in])
+        UI.user_error!("File to import at `#{in_path}` not found") unless File.exist? in_path
+
+        file = params[:key] unless params[:key].to_s.length.zero?
+        file ||= File.basename(params[:in])
+        File.write("#{params[:workspace]}/#{file}.crypt", File.read(in_path))
         @git_changed = true
       end
 
       def delete_file(params)
-        FileUtils.rm_f "#{params[:workspace]}/#{params[:key]}.crypt"
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
+        path = "#{params[:workspace]}/#{params[:key]}.crypt"
+        UI.user_error!("Wrong key file supplied.") unless File.exist? path
+
+        FileUtils.rm path
         @git_changed = true
       end
 
       def export_file(params)
-        File.write(File.expand_path(params[:out]), File.read("#{params[:workspace]}/#{params[:key]}.crypt"))
-        @git_changed = true
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
+        path = "#{params[:workspace]}/#{params[:key]}.crypt"
+        UI.user_error!("Wrong key file supplied.") unless File.exist? path
+
+        outfile = params[:out] unless params[:out].to_s.length.zero?
+        outfile ||= File.basename(params[:key])
+        File.write(File.expand_path(outfile), File.read(path))
       end
 
       def nuke_all(params)
