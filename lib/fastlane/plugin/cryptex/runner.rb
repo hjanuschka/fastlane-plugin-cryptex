@@ -8,7 +8,20 @@ module Fastlane
         UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
 
         env_world_file = "#{params[:workspace]}/#{params[:key]}_env_world.crypt"
-        File.write(env_world_file, params[:hash].to_json)
+        if params[:hash].kind_of?(String)
+          begin
+            params[:hash] = JSON.parse(params[:hash])
+          rescue
+            # might contain sensitive informatio
+            UI.user_error!("Supplied :hash isn't in json format")
+          end
+        end
+        if params[:hash].kind_of?(Hash)
+          json = params[:hash].to_json
+        else
+          UI.user_error!("Not really sure what to do with :hash param of type #{params[:hash].class}")
+        end
+        File.write(env_world_file, json)
         @git_changed = true
       end
 
