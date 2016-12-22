@@ -26,17 +26,33 @@ module Fastlane
       end
 
       def import_file(params)
-        File.write("#{params[:workspace]}/#{params[:key]}.crypt", File.read(File.expand_path(params[:in])))
+        UI.user_error!("No input file supplied") if params[:in].to_s.length.zero?
+        in_path = File.expand_path(params[:in])
+        UI.user_error!("File to import at `#{in_path}` not found") unless File.exist? in_path
+
+        file = params[:key] unless params[:key].to_s.length.zero?
+        file ||= File.basename(params[:in])
+        File.write("#{params[:workspace]}/#{file}.crypt", File.read(in_path))
         @git_changed = true
       end
 
       def delete_file(params)
-        FileUtils.rm_f "#{params[:workspace]}/#{params[:key]}.crypt"
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
+        path = "#{params[:workspace]}/#{params[:key]}.crypt"
+        UI.user_error!("Wrong key file supplied.") unless File.exist? path
+
+        FileUtils.rm path
         @git_changed = true
       end
 
       def export_file(params)
-        File.write(File.expand_path(params[:out]), File.read("#{params[:workspace]}/#{params[:key]}.crypt"))
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
+        path = "#{params[:workspace]}/#{params[:key]}.crypt"
+        UI.user_error!("Wrong key file supplied.") unless File.exist? path
+
+        outfile = params[:out] unless params[:out].to_s.length.zero?
+        outfile ||= File.basename(params[:key])
+        File.write(File.expand_path(outfile), File.read(path))
         @git_changed = true
       end
 
