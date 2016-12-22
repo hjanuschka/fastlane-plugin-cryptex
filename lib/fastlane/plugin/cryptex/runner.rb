@@ -53,7 +53,6 @@ module Fastlane
         outfile = params[:out] unless params[:out].to_s.length.zero?
         outfile ||= File.basename(params[:key])
         File.write(File.expand_path(outfile), File.read(path))
-        @git_changed = true
       end
 
       def nuke_all(params)
