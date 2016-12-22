@@ -4,13 +4,19 @@ module Fastlane
       attr_accessor :git_changed
 
       def import_env(params)
+        UI.user_error!("No input hash supplied") if params[:hash].to_s.length.zero?
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
+
         env_world_file = "#{params[:workspace]}/#{params[:key]}_env_world.crypt"
         File.write(env_world_file, params[:hash].to_json)
         @git_changed = true
       end
 
       def export_env(params)
+        UI.user_error!("No key file supplied") if params[:key].to_s.length.zero?
         env_world_file = "#{params[:workspace]}/#{params[:key]}_env_world.crypt"
+        UI.user_error!("Wrong key file supplied.") unless File.exist? env_world_file
+
         world_data = File.read(env_world_file)
         world_data_parsed = JSON.parse(world_data)
         ret_json = {}
