@@ -59,7 +59,7 @@ module Fastlane
                                        short_option: "-s",
                                        env_name: "CRYPTEX_TYPE",
                                        description: "Sub-Action Type (export, import, decrypt)",
-                                      default_value: "export"),
+                                       default_value: "export"),
           FastlaneCore::ConfigItem.new(key: :verbose,
                                        env_name: "CRYPTEX_VERBOSE",
                                        description: "Print out extra information and all commands",
