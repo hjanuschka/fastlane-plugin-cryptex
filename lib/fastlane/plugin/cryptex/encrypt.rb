@@ -79,6 +79,7 @@ module Fastlane
 
         tmpfile = File.join(Dir.mktmpdir, "temporary")
         command = ["openssl aes-256-cbc"]
+        command << "-md sha256"
         command << "-k #{password.shellescape}"
         command << "-in #{path.shellescape}"
         command << "-out #{tmpfile.shellescape}"
