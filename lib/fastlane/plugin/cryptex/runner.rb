@@ -86,7 +86,7 @@ module Fastlane
                                            hide_keys: [],
                                                title: "Summary for cryptex #{Cryptex::VERSION}")
         @git_changed = false
-        params[:workspace] = GitHelper.clone(params[:git_url], params[:shallow_clone], skip_docs: params[:skip_docs], branch: params[:git_branch])
+        params[:workspace] = GitHelper.clone(params[:git_url], params[:shallow_clone], skip_docs: params[:skip_docs], branch: params[:git_branch], digest: params[:digest])
         @params = params
         if params[:type] == "import_env"
           return import_env(params)
@@ -113,7 +113,7 @@ module Fastlane
       ensure
         if git_changed
           message = GitHelper.generate_commit_message(params)
-          GitHelper.commit_changes(params[:workspace], message, params[:git_url], params[:git_branch])
+          GitHelper.commit_changes(params[:workspace], message, params[:git_url], params[:git_branch], digest: params[:digest])
         end
         GitHelper.clear_changes
       end

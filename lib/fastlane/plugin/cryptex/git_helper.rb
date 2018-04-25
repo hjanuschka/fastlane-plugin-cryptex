@@ -1,7 +1,7 @@
 module Fastlane
   module Cryptex
     class GitHelper
-      def self.clone(git_url, shallow_clone, manual_password: nil, skip_docs: false, branch: "master")
+      def self.clone(git_url, shallow_clone, manual_password: nil, skip_docs: false, branch: "master", digest: nil)
         return @dir if @dir
 
         @dir = Dir.mktmpdir
@@ -26,7 +26,7 @@ module Fastlane
         checkout_branch(branch) unless branch == "master"
 
         copy_readme(@dir) unless skip_docs
-        Cryptex::Encrypt.new.decrypt_repo(path: @dir, git_url: git_url, manual_password: manual_password)
+        Cryptex::Encrypt.new.decrypt_repo(path: @dir, git_url: git_url, manual_password: manual_password, digest: digest)
 
         return @dir
       end
@@ -46,11 +46,11 @@ module Fastlane
         end
       end
 
-      def self.commit_changes(path, message, git_url, branch = "master")
+      def self.commit_changes(path, message, git_url, branch = "master", digest: nil)
         Dir.chdir(path) do
           return if `git status`.include?("nothing to commit")
 
-          Cryptex::Encrypt.new.encrypt_repo(path: path, git_url: git_url)
+          Cryptex::Encrypt.new.encrypt_repo(path: path, git_url: git_url, digest: digest)
           File.write("cryptex_version.txt", Cryptex::VERSION) # unencrypted
 
           commands = []

@@ -35,27 +35,29 @@ module Fastlane
         Security::InternetPassword.delete(server: server_name(git_url))
       end
 
-      def encrypt_repo(path: nil, git_url: nil)
+      def encrypt_repo(path: nil, git_url: nil, digest: nil)
         iterate(path) do |current|
           crypt(path: current,
             password: password(git_url),
-             encrypt: true)
+             encrypt: true,
+              digest: digest)
           UI.success "🔒  Encrypted '#{File.basename(current)}'" if $verbose
         end
         UI.success "🔒  Successfully encrypted certificates repo"
       end
 
-      def decrypt_repo(path: nil, git_url: nil, manual_password: nil)
+      def decrypt_repo(path: nil, git_url: nil, manual_password: nil, digest: nil)
         iterate(path) do |current|
           begin
             crypt(path: current,
               password: manual_password || password(git_url),
-               encrypt: false)
+               encrypt: false,
+                digest: digest)
           rescue
             UI.error "Couldn't decrypt the repo, please make sure you enter the right password!"
             UI.user_error!("Invalid password passed via 'CRYPTEX_PASSWORD'") if ENV["CRYPTEX_PASSWORD"]
             clear_password(git_url)
-            decrypt_repo(path: path, git_url: git_url)
+            decrypt_repo(path: path, git_url: git_url, digest: digest)
             return
           end
           UI.success "🔓  Decrypted '#{File.basename(current)}'" if $verbose
@@ -72,7 +74,7 @@ module Fastlane
 
       private
 
-      def crypt(path: nil, password: nil, encrypt: true)
+      def crypt(path: nil, password: nil, encrypt: true, digest: 'sha256')
         if password.to_s.strip.length.zero? && encrypt
           UI.user_error!("No password supplied")
         end
@@ -80,6 +82,7 @@ module Fastlane
         tmpfile = File.join(Dir.mktmpdir, "temporary")
         command = ["openssl aes-256-cbc"]
         command << "-k #{password.shellescape}"
+        command << "-md #{digest}"
         command << "-in #{path.shellescape}"
         command << "-out #{tmpfile.shellescape}"
         command << "-a"

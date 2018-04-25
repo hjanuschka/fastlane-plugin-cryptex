@@ -77,7 +77,13 @@ module Fastlane
                                        env_name: "CRYPTEX_SKIP_DOCS",
                                        description: "Skip generation of a README.md for the created git repository",
                                        is_string: false,
-                                       default_value: false)
+                                       default_value: false),
+          FastlaneCore::ConfigItem.new(key: :digest,
+                                       short_option: "-m",
+                                       env_name: "CRYPTEX_DIGEST",
+                                       description: "Specify the Message Digest to use for crypt routines",
+                                       is_string: true,
+                                       default_value: "md5")
         ]
       end
     end
