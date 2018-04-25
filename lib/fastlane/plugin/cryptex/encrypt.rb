@@ -53,7 +53,7 @@ module Fastlane
               password: manual_password || password(git_url),
                encrypt: false,
                 digest: digest)
-          rescue
+          rescue StandardError
             UI.error "Couldn't decrypt the repo, please make sure you enter the right password!"
             UI.user_error!("Invalid password passed via 'CRYPTEX_PASSWORD'") if ENV["CRYPTEX_PASSWORD"]
             clear_password(git_url)

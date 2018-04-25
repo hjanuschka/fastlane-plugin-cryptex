@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-$:.push File.expand_path("../../lib", __FILE__)
+$:.push File.expand_path('../lib', __dir__)
 
 require 'fastlane'
 require 'fastlane/plugin/cryptex'

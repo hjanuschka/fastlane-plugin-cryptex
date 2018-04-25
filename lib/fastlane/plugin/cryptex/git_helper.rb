@@ -14,7 +14,7 @@ module Fastlane
           FastlaneCore::CommandExecutor.execute(command: "GIT_TERMINAL_PROMPT=0 #{command}",
                                               print_all: $verbose,
                                           print_command: $verbose)
-        rescue
+        rescue StandardError
           UI.error("Error cloning Repo")
           UI.error("Run the following command manually to make sure you're properly authenticated:")
           UI.command(command)
@@ -68,7 +68,7 @@ module Fastlane
         end
         FileUtils.rm_rf(path)
         @dir = nil
-      rescue => ex
+      rescue StandardError => ex
         UI.error("Couldn't commit or push changes back to git...")
         UI.error(ex)
       end

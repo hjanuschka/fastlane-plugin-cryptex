@@ -11,7 +11,6 @@ module Fastlane
         FastlaneCore::UpdateChecker.start_looking_for_update('cryptex')
         self.new.run
       ensure
-
         FastlaneCore::UpdateChecker.show_update_status('cryptex', Cryptex::VERSION)
       end
 

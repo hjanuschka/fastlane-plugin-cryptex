@@ -11,7 +11,7 @@ module Fastlane
         if params[:hash].kind_of?(String)
           begin
             params[:hash] = JSON.parse(params[:hash])
-          rescue
+          rescue StandardError
             # might contain sensitive informatio
             UI.user_error!("Supplied :hash isn't in json format")
           end
