@@ -59,7 +59,7 @@ lane :test do
     key: "my_awesome_app_production"
   )
 
-  # Nuke's all files
+  # Nukes all files
   cryptex(
     type: "nuke"
   )
