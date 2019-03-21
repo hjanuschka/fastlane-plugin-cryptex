@@ -75,7 +75,12 @@ module Fastlane
 
         outfile = params[:out] unless params[:out].to_s.length.zero?
         outfile ||= File.basename(params[:key])
-        File.write(File.expand_path(outfile), File.read(path))
+        outfile = File.expand_path(outfile)
+        
+        require "fileutils"
+        
+        FileUtils.mkdir_p(File.dirname(outfile))
+        File.write(outfile, File.read(path))
       end
 
       def nuke_all(params)
