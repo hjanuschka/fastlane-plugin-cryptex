@@ -51,6 +51,10 @@ module Fastlane
 
         file = params[:key] unless params[:key].to_s.length.zero?
         file ||= File.basename(params[:in])
+        
+        require "fileutils"
+        
+        FileUtils.mkdir_p(File.dirname("#{params[:workspace]}/#{file}"))
         File.write("#{params[:workspace]}/#{file}.crypt", File.read(in_path))
         @git_changed = true
       end
