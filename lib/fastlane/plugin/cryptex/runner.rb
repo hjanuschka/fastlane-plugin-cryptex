@@ -51,6 +51,10 @@ module Fastlane
 
         file = params[:key] unless params[:key].to_s.length.zero?
         file ||= File.basename(params[:in])
+        
+        require "fileutils"
+        
+        FileUtils.mkdir_p(File.dirname("#{params[:workspace]}/#{file}"))
         File.write("#{params[:workspace]}/#{file}.crypt", File.read(in_path))
         @git_changed = true
       end
@@ -71,7 +75,12 @@ module Fastlane
 
         outfile = params[:out] unless params[:out].to_s.length.zero?
         outfile ||= File.basename(params[:key])
-        File.write(File.expand_path(outfile), File.read(path))
+        outfile = File.expand_path(outfile)
+        
+        require "fileutils"
+        
+        FileUtils.mkdir_p(File.dirname(outfile))
+        File.write(outfile, File.read(path))
       end
 
       def nuke_all(params)
