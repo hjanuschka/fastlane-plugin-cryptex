@@ -3,7 +3,7 @@ module Fastlane
     class CryptexGenerateKeystoreAction < Action
       def self.run(params)
         require "fileutils"
-        cmd = "keytool -genkey -v -keystore #{File.expand_path(params[:destination])} -storepass #{params[:password]} -keypass #{params[:password]} -alias #{params[:alias]} -dname 'CN=#{params[:fullname]},L=#{params[:city]}' -validity 10000"
+        cmd = "keytool -genkey -v -keystore #{File.expand_path(params[:destination])} -storepass #{params[:password]} -keypass #{params[:password]} -alias #{params[:alias]} -keysize #{params[:size]} -dname 'CN=#{params[:fullname]},L=#{params[:city]}' -validity 10000"
         FastlaneCore::CommandExecutor.execute(command: cmd,
                                             print_all: true,
                                         print_command: true)
