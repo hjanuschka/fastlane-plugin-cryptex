@@ -112,7 +112,7 @@ module Fastlane
         return unless @dir
 
         result = Dir.chdir(@dir) do
-          FastlaneCore::CommandExecutor.execute(command: "git branch --list origin/#{branch.shellescape} --no-color -r",
+          FastlaneCore::CommandExecutor.execute(command: "git branch --list origin/#{branch.shellescape} --no-color -r | xargs echo",
                                                 print_all: $verbose,
                                                 print_command: $verbose)
         end
