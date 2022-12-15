@@ -91,6 +91,8 @@ module Fastlane
         success = system(command.join(' '))
 
         UI.crash!("Error decrypting '#{path}'") unless success
+        # On some filesystems the file is not immediately available after the command finished
+        sleep 0.1 unless File.exist?(tmpfile)
         FileUtils.mv(tmpfile, path)
       end
     end
